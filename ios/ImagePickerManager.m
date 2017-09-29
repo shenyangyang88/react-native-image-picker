@@ -194,7 +194,15 @@ RCT_EXPORT_METHOD(showImagePicker:(NSDictionary *)options callback:(RCTResponseS
                 root = root.presentedViewController;
             }
             [root presentViewController:self.picker animated:YES completion:nil];
+
         });
+        /*dispatch_async(dispatch_get_main_queue(), ^{
+            UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+            while (root.presentedViewController != nil) {
+                root = root.presentedViewController;
+            }
+            [root presentViewController:self.picker animated:YES completion:nil];
+        });*/
     };
 
     if (target == RNImagePickerTargetCamera) {
