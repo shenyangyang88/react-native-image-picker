@@ -188,7 +188,14 @@ RCT_EXPORT_METHOD(showImagePicker:(NSDictionary *)options callback:(RCTResponseS
 
     // Check permissions
     void (^showPickerViewController)() = ^void() {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        int64_t delayInSeconds = 500;      // 延迟的时间
+        /*
+         *@parameter 1,时间参照，从此刻开始计时
+         *@parameter 2,延时多久，此处为秒级，还有纳秒等。10ull * NSEC_PER_MSEC
+         */
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_MSEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            // do something
             UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
             while (root.presentedViewController != nil) {
                 root = root.presentedViewController;
